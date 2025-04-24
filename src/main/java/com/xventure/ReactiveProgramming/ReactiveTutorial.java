@@ -9,9 +9,16 @@ public class ReactiveTutorial {
         return Mono.just("java").log();
     }
 
+    private Flux<String> testFlux(){
+        return Flux.just("Java" , "Spring" , "MongoDB" , "Maven" , "C++");
+    }
+
     public static void main(String[] args) {
         ReactiveTutorial reactiveTutorial = new ReactiveTutorial();
         reactiveTutorial.testMono().subscribe(data -> System.out.println(data));
 
+        reactiveTutorial.testFlux().subscribe(
+                System.out::println
+        );
     }
 }
