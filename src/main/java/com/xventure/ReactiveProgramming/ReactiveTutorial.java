@@ -3,6 +3,9 @@ package com.xventure.ReactiveProgramming;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+import java.util.Locale;
+
 public class ReactiveTutorial {
 
     private Mono<String> testMono(){
@@ -10,14 +13,25 @@ public class ReactiveTutorial {
     }
 
     private Flux<String> testFlux(){
-        return Flux.just("Java" , "Spring" , "MongoDB" , "Maven" , "C++");
+        List<String> programmingLang = List.of("Java" , "Spring" , "MongoDB" , "Maven" , "C++");
+        return Flux.fromIterable(programmingLang);
+    }
+
+    private Flux<String> fluxMap(){
+        Flux<String> flux = Flux.just("java" , "Spring" , "mongoDB" , "Maven" , "C++");
+        return flux.map(s -> s.toUpperCase(Locale.ROOT));
+    }
+
+    private Flux<String> fluxFlatMap(){
+        Flux<String> flux = Flux.just("java" , "Spring" , "mongoDB" , "Maven" , "C++");
+        return flux.flatMap(s -> Mono.just(s.toUpperCase()));
     }
 
     public static void main(String[] args) {
         ReactiveTutorial reactiveTutorial = new ReactiveTutorial();
-        reactiveTutorial.testMono().subscribe(data -> System.out.println(data));
+        reactiveTutorial.testMono().subscribe(System.out::println);
 
-        reactiveTutorial.testFlux().subscribe(
+        reactiveTutorial.fluxFlatMap().subscribe(
                 System.out::println
         );
     }
