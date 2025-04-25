@@ -27,11 +27,16 @@ public class ReactiveTutorial {
         return flux.flatMap(s -> Mono.just(s.toUpperCase()));
     }
 
+    private Flux<String> fluxSkip(){
+        Flux<String> flux = Flux.just("Java", "Spring" , "mongoDB" , "Maven" , "C++");
+        return flux.skip(2);
+    }
+
     public static void main(String[] args) {
         ReactiveTutorial reactiveTutorial = new ReactiveTutorial();
-        reactiveTutorial.testMono().subscribe(System.out::println);
+//        reactiveTutorial.testMono().subscribe(System.out::println);
 
-        reactiveTutorial.fluxFlatMap().subscribe(
+        reactiveTutorial.fluxSkip().subscribe(
                 System.out::println
         );
     }
